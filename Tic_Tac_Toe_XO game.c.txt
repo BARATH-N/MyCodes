@@ -1,0 +1,122 @@
+Two Two Game
+
+#include<stdio.h>
+#include<stdlib.h>
+
+char matrix[3][3];
+char check(void);
+void initialmatrix(void);
+void playerturn(void);
+void computerturn(void);
+void display(void);
+
+int main(void)
+{
+    char done;
+    printf("Two Two Two\n");
+    printf("You vs Bot\n");
+    done=' ';
+    initialmatrix();
+    do{
+        display();
+        playerturn();
+        done=check();
+        if(done!=' ') break;
+        computerturn();
+        done=check();
+    }while(done==' ');
+    if(done=='X')
+    {
+        printf("You Won! Great don\n");
+    }
+    else{
+        printf("Bot Won! Do once again\n");
+        }
+        display();
+        return 0;
+}
+void initialmatrix(void)
+{
+    int i,j;
+    for(i=0;i<3;i++)
+    {
+        for(j=0;j<3;j++)
+        {
+            matrix[i][j]=' ';
+        }
+    }
+}
+void playerturn(void)
+{
+    int x,y;
+    printf("Mark the box by entering the row and column position : ");
+    scanf("%d%*c%d",&x,&y);
+    x--,y--;
+    if(matrix[x][y]!=' ')
+    {
+        printf("Already occupied , enter the correct position\n");
+        playerturn();
+    }
+    else
+    {
+        matrix[x][y]='X';
+    }
+}
+void computerturn(void)
+{
+    int i,j;
+    for(i=0;i<3;i++)
+    {
+        for(j=0;j<3;j++)
+            if(matrix[i][j]==' ')  break;
+            if(matrix[i][j]==' ') break;
+            
+    }
+    if(i*j==9)
+    {
+        printf("Game Draw\n");
+        exit (0);
+    }
+    else{
+        matrix[i][j]='O';
+    }
+
+}
+void display(void)
+{
+    int grid;
+    for(grid=0;grid<3;grid++)
+    {
+        printf(" %c | %c | %c ",matrix[grid][0],matrix[grid][1],matrix[grid][2]);
+        if(grid!=2){
+            printf("\n---|---|---\n");
+        }
+    }
+   // printf('\n');
+}
+char check(void)
+{
+    int row,col,rigdi,lefdi;
+    for(row=0;row<3;row++)
+    {
+        if(matrix[row][0]==matrix[row][1]&&matrix[row][1]==matrix[row][2]){
+            return matrix[row][1];
+        }
+    }
+    for(col=0;col<3;col++)
+    {
+        if(matrix[0][col]==matrix[1][col]&&matrix[1][col]==matrix[2][col]){
+            return matrix[1][col];
+        }
+    }
+    if(matrix[0][0]==matrix[1][1]&&matrix[1][1]==matrix[2][2])
+     {
+            return matrix[1][1];
+     }
+    if(matrix[0][2]==matrix[1][1]&&matrix[1][1]==matrix[2][0])
+     {
+            return matrix[1][1];
+     }
+    return ' ';
+
+}
